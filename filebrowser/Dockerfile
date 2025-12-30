@@ -16,7 +16,12 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+
+FROM ${BUILD_FROM} AS build
+LABEL INTERMEDIATE_BUILD=yes
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.23
+COPY --from=build / /
 
 ##################
 # 2 Modify Image #
